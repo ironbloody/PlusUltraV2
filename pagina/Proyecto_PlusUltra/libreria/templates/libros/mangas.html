@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block titulo %}  Lista de mangas  {% endblock %}
+
+{% block contenido %} 
+
+<div class="card">
+    <div class="card-header">
+        <a name="" id="" class="btn btn-primary" href="{% url 'crear_manga' %}" role="button" href="#">agregar nuevo manga</a>
+
+    </div>
+    <div class="card-body">
+        <h4 class="card-title">Mangas</h4>
+        
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Titulo</th>
+                    <th>Imagen</th>
+                    <th>Stock</th>
+                    <th>Precio</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for manga in mangas %}
+                <tr>
+                    <td> {{ manga.nombre }} </td>
+                    <td> 
+                    <img src="{{manga.imagen.url}}" height="200">
+                    </td>
+                    <td> {{ manga.stock }} </td>
+                    <td> {{ manga.precio }} </td>
+                    <td> <a name="" id="" class="btn btn-info" href="{% url 'editar' manga.id %}" role="button">Editar </a>
+                        |
+                         <a name="" id="" class="btn btn-danger" href="{% url 'eliminar' manga.id %}" role="button">Borrar </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        
+    </div>
+    <div class="card-footer text-muted">
+    </div>
+</div>
+
+{% endblock %}

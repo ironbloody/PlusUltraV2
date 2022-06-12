@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block titulo %}  Lista de comics  {% endblock %}
+
+{% block contenido %} 
+
+<div class="card">
+    <div class="card-header">
+        <a name="" id="" class="btn btn-primary" href="{% url 'crear' %}" role="button" href="#">agregar nuevo comic</a>
+
+    </div>
+    <div class="card-body">
+        <h4 class="card-title">Comics</h4>
+        
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Titulo</th>
+                    <th>Imagen</th>
+                    <th>Stock</th>
+                    <th>Precio</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for libro in libros %}
+                <tr>
+                    <td> {{ libro.nombre }} </td>
+                    <td> 
+                    <img src="{{libro.imagen.url}}" height="200">
+                    </td>
+                    <td> {{ libro.stock }} </td>
+                    <td> {{ libro.precio }} </td>
+                    <td> <a name="" id="" class="btn btn-info" href="{% url 'editar' libro.id %}" role="button">Editar </a>
+                        |
+                         <a name="" id="" class="btn btn-danger" href="{% url 'eliminar' libro.id %}" role="button">Borrar </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        
+    </div>
+    <div class="card-footer text-muted">
+    </div>
+</div>
+
+{% endblock %}
