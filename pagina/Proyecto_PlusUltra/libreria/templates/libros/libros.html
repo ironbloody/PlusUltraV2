@@ -6,8 +6,15 @@
 
 <div class="card">
     <div class="card-header">
-        <a name="" id="" class="btn btn-primary" href="{% url 'crear_libro' %}" role="button" href="#">agregar nuevo libro</a>
 
+        {% for group in user.groups.all %}
+            {% if user.is_authenticated %}
+                {% if group.name == 'Comprador' %}
+                <a name="" id="" class="btn btn-primary" href="{% url 'crear_libro' %}" role="button" href="#">agregar nuevo libro</a>
+               {% endif %}
+            {% endif %}
+        {% endfor %}
+        
     </div>
     <div class="card-body">
         <h4 class="card-title">Libros</h4>
@@ -15,29 +22,44 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>Titulo</th>
+                    <th>Imagen</th>
+                    <th>Editorial</th>
                     <th>Imagen</th>
                     <th>Stock</th>
                     <th>Precio</th>
-                    <th>Acciones</th>
+                    {% for group in user.groups.all %}
+                        {% if user.is_authenticated %}
+                            {% if group.name == 'Comprador' %}
+                                <th>Acciones</th>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
                 </tr>
             </thead>
             <tbody>
-                while Articulo.tipo == "Libro":
-                    {% for libro in libros %}
-                    <tr>
-                        <td> {{ libro.nombre }} </td>
-                        <td> 
-                        <img src="{{libro.imagen.url}}" height="200">
-                        </td>
-                        <td> {{ libro.stock }} </td>
-                        <td> {{ libro.precio }} </td>
-                        <td> <a name="" id="" class="btn btn-info" href="{% url 'editar' libro.id %}" role="button">Editar </a>
-                            |
-                            <a name="" id="" class="btn btn-danger" href="{% url 'eliminar' libro.id %}" role="button">Borrar </a>
-                        </td>
-                    </tr>
+                {% for libro in libros %}
+                <tr>
+                    <td> 
+                        <img src="{{libro.imagen.url}}" width="100">
+                    </td>
+                    <td> {{ libro.editorial }} </td>
+                    <td> {{ libro.nombre }} </td>
+                    
+                    <td> {{ libro.stock }} </td>
+                    <td> {{ libro.precio }} </td>
+                    {% for group in user.groups.all %}
+                        {% if user.is_authenticated %}
+                            {% if group.name == 'Comprador' %}
+                                <td> <a name="" id="" class="btn btn-info" href="{% url 'editar' libro.id %}" role="button">Editar </a>
+                                    |
+                                    <a name="" id="" class="btn btn-danger" href="{% url 'eliminar' libro.id %}" role="button">Borrar </a>
+                                </td>
+                            {% endif %}
+                        {% endif %}
                     {% endfor %}
+                   
+                </tr>
+                {% endfor %}
             </tbody>
         </table>
         

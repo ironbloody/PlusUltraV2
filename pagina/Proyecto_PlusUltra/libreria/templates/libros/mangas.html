@@ -1,3 +1,4 @@
+
 {% extends "base.html" %}
 
 {% block titulo %}  Lista de mangas  {% endblock %}
@@ -6,7 +7,13 @@
 
 <div class="card">
     <div class="card-header">
-        <a name="" id="" class="btn btn-primary" href="{% url 'crear_manga' %}" role="button" href="#">agregar nuevo manga</a>
+        {% for group in user.groups.all %}
+            {% if user.is_authenticated %}
+                {% if group.name == 'Comprador' %}
+                <a name="" id="" class="btn btn-primary" href="{% url 'crear_manga' %}" role="button" href="#">agregar nuevo libro</a>
+               {% endif %}
+            {% endif %}
+        {% endfor %}
 
     </div>
     <div class="card-body">
@@ -15,27 +22,44 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>Titulo</th>
                     <th>Imagen</th>
+                    <th>Editorial</th>
+                    <th>Titulo</th>
                     <th>Stock</th>
                     <th>Precio</th>
-                    <th>Acciones</th>
+                    {% for group in user.groups.all %}
+                        {% if user.is_authenticated %}
+                            {% if group.name == 'Comprador' %}
+                                <th>Acciones</th>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                    
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="Manga">
                 {% for manga in mangas %}
-                <tr>
-                    <td> {{ manga.nombre }} </td>
-                    <td> 
-                    <img src="{{manga.imagen.url}}" height="200">
-                    </td>
-                    <td> {{ manga.stock }} </td>
-                    <td> {{ manga.precio }} </td>
-                    <td> <a name="" id="" class="btn btn-info" href="{% url 'editar' manga.id %}" role="button">Editar </a>
-                        |
-                         <a name="" id="" class="btn btn-danger" href="{% url 'eliminar' manga.id %}" role="button">Borrar </a>
-                    </td>
-                </tr>
+                    <tr>
+                        <td> 
+                            <img src="{{manga.imagen.url}}" width="100">
+                        </td>
+                        <td> {{ manga.editorial }} </td>
+                        <td> {{ manga.nombre }} </td>
+                    
+                        
+                        <td> {{ manga.stock }} </td>
+                        <td> {{ manga.precio }} </td>
+                        {% for group in user.groups.all %}
+                            {% if user.is_authenticated %}
+                                {% if group.name == 'Comprador' %}
+                                    <td> <a name="" id="" class="btn btn-info" href="{% url 'editar' manga.id %}" role="button">Editar </a>
+                                        |
+                                        <a name="" id="" class="btn btn-danger" href="{% url 'eliminar' manga.id %}" role="button">Borrar </a>
+                                    </td>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </tr>
                 {% endfor %}
             </tbody>
         </table>

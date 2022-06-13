@@ -18,6 +18,13 @@
               <a class="nav-item nav-link active" href="{% url 'libros' %}">Libros</a>
               <a class="nav-item nav-link active" href="{% url 'mangas' %}">Mangas</a>
               <a class="nav-item nav-link active" href="{% url 'comics' %}">Comics</a>
+              <a class="nav-item nav-link active" href="{% url 'registro' %}">Registrarse</a>
+              {% if user.is_authenticated %}
+              <a class="nav-item nav-link active" href="{% url 'logout' %}">Logout</a>
+              {% else %}
+              <a class="nav-item nav-link active" href="{% url 'login' %}">Login</a>
+              {% endif %}
+              <a class="nav-item nav-link active"> Hola, {{request.user}}</a>
           </div>
       </nav>
     <div class="container">
